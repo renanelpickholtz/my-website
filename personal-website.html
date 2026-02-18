@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renanel Pickholtz</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --deep: #0d2040;
+    --teal: #0e7c7b;
+    --teal-light: #15a6a5;
+    --cyan: #5ecfcf;
+    --foam: #c8f0ef;
+    --white: #f5fafc;
+    --gray: #8ba3b0;
+    --text: #d4eaf0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,22,40,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(14,124,123,0.3);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 3rem;
+  }
+  .nav-name { font-size: 1.1rem; letter-spacing: 2px; color: var(--cyan); font-family: 'Georgia', serif; font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; font-family: Arial, sans-serif; }
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    position: relative; overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #0d3a5c 0%, #0a1628 70%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Cpath d='M0 300 Q100 260 200 290 Q300 320 400 270 Q500 220 600 260 Q700 300 800 250 L800 400 L0 400Z' fill='rgba(14,124,123,0.08)'/%3E%3Cpath d='M0 340 Q150 310 250 330 Q350 350 450 310 Q550 270 650 300 Q750 330 800 290 L800 400 L0 400Z' fill='rgba(14,124,123,0.05)'/%3E%3C/svg%3E") bottom/cover no-repeat;
+  }
+  /* animated floating particles */
+  .bubble { position: absolute; border-radius: 50%; background: rgba(94,207,207,0.06); animation: float linear infinite; }
+  @keyframes float { 0%{transform:translateY(0) scale(1);opacity:0.6} 50%{opacity:0.3} 100%{transform:translateY(-100vh) scale(0.5);opacity:0} }
+
+  .hero-tag { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--teal-light); font-family: Arial, sans-serif; margin-bottom: 1.2rem; }
+  .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: normal; color: var(--white); letter-spacing: 2px; line-height: 1.1; }
+  .hero h1 span { color: var(--cyan); }
+  .hero-subtitle { margin-top: 1.2rem; font-size: 1.1rem; color: var(--gray); font-style: italic; max-width: 520px; line-height: 1.7; }
+  .hero-divider { width: 60px; height: 2px; background: linear-gradient(90deg, var(--teal), var(--cyan)); margin: 2rem auto; }
+  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+  .btn {
+    padding: 0.75rem 1.8rem; border-radius: 2px; text-decoration: none; font-size: 0.82rem;
+    letter-spacing: 1.5px; text-transform: uppercase; font-family: Arial, sans-serif;
+    transition: all 0.3s; display: inline-block;
+  }
+  .btn-primary { background: var(--teal); color: var(--white); border: 1px solid var(--teal); }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,124,123,0.4); }
+  .btn-outline { background: transparent; color: var(--cyan); border: 1px solid rgba(94,207,207,0.4); }
+  .btn-outline:hover { background: rgba(94,207,207,0.08); transform: translateY(-2px); }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--gray); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-family: Arial, sans-serif; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; color: var(--teal-light); font-family: Arial, sans-serif; margin-bottom: 0.8rem; }
+  .section-title { font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--white); font-weight: normal; margin-bottom: 0.5rem; }
+  .section-line { width: 40px; height: 2px; background: linear-gradient(90deg, var(--teal), transparent); margin: 1.2rem 0 2.5rem; }
+
+  /* RESEARCH INTERESTS */
+  #research { background: var(--deep); }
+  .interests-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .interest-tag {
+    padding: 0.6rem 1.4rem; border: 1px solid rgba(14,124,123,0.4);
+    border-radius: 2px; font-size: 0.9rem; color: var(--cyan);
+    background: rgba(14,124,123,0.08); font-family: Arial, sans-serif;
+    transition: all 0.3s; cursor: default;
+  }
+  .interest-tag:hover { background: rgba(14,124,123,0.2); border-color: var(--teal-light); transform: translateY(-2px); }
+
+  /* PUBLICATIONS */
+  #publications { background: var(--navy); }
+  .pub-item {
+    padding: 1.5rem; border-left: 2px solid rgba(14,124,123,0.3);
+    margin-bottom: 1.5rem; transition: border-color 0.3s;
+  }
+  .pub-item:hover { border-left-color: var(--teal-light); }
+  .pub-year { font-size: 0.75rem; color: var(--teal-light); letter-spacing: 2px; font-family: Arial, sans-serif; margin-bottom: 0.4rem; }
+  .pub-title { font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; line-height: 1.5; }
+  .pub-authors { font-size: 0.85rem; color: var(--gray); font-style: italic; margin-bottom: 0.4rem; }
+  .pub-journal { font-size: 0.82rem; color: var(--teal-light); font-family: Arial, sans-serif; }
+  .pub-more { display: inline-block; margin-top: 2rem; font-size: 0.82rem; color: var(--cyan); text-decoration: none; letter-spacing: 1px; font-family: Arial, sans-serif; border-bottom: 1px solid rgba(94,207,207,0.3); padding-bottom: 2px; transition: border-color 0.3s; }
+  .pub-more:hover { border-color: var(--cyan); }
+
+  /* TEACHING */
+  #teaching { background: var(--deep); }
+  .teaching-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .teaching-card {
+    padding: 1.8rem; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(14,124,123,0.2); border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .teaching-card:hover { background: rgba(14,124,123,0.08); border-color: rgba(14,124,123,0.5); transform: translateY(-4px); }
+  .tc-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .tc-title { font-size: 1rem; color: var(--white); margin-bottom: 0.6rem; }
+  .tc-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; font-family: Arial, sans-serif; }
+
+  /* AFFILIATIONS */
+  #affiliations { background: var(--navy); }
+  .aff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .aff-card {
+    padding: 2rem 1.5rem; text-align: center;
+    border: 1px solid rgba(14,124,123,0.2); border-radius: 4px;
+    background: rgba(255,255,255,0.02); text-decoration: none;
+    transition: all 0.3s; display: block;
+  }
+  .aff-card:hover { background: rgba(14,124,123,0.1); border-color: var(--teal-light); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(14,124,123,0.15); }
+  .aff-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+  .aff-name { font-size: 0.95rem; color: var(--white); margin-bottom: 0.3rem; }
+  .aff-sub { font-size: 0.8rem; color: var(--gray); font-family: Arial, sans-serif; }
+
+  /* CONTACT */
+  #contact { background: var(--deep); text-align: center; }
+  #contact .container { max-width: 600px; }
+  .contact-email {
+    display: inline-block; margin: 1.5rem 0; padding: 1rem 2rem;
+    border: 1px solid rgba(14,124,123,0.4); border-radius: 2px;
+    color: var(--cyan); font-size: 1rem; letter-spacing: 1px;
+    font-family: Arial, sans-serif; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .contact-email:hover { background: rgba(14,124,123,0.15); border-color: var(--teal-light); }
+  .contact-social { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+
+  /* FOOTER */
+  footer { background: var(--navy); border-top: 1px solid rgba(14,124,123,0.2); padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--gray); font-family: Arial, sans-serif; letter-spacing: 1px; }
+
+  /* WAVE DIVIDER */
+  .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
+  .wave svg { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-name">Renanel Pickholtz</span>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#affiliations">Affiliations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <!-- Floating bubbles -->
+  <div class="bubble" style="width:300px;height:300px;left:-80px;top:20%;animation-duration:18s;"></div>
+  <div class="bubble" style="width:150px;height:150px;right:10%;top:60%;animation-duration:12s;animation-delay:-4s;"></div>
+  <div class="bubble" style="width:80px;height:80px;left:30%;top:75%;animation-duration:9s;animation-delay:-2s;"></div>
+  <div class="bubble" style="width:200px;height:200px;right:-40px;top:10%;animation-duration:15s;animation-delay:-7s;"></div>
+
+  <p class="hero-tag">Marine Ecologist · Educator · Conservationist</p>
+  <h1>Renanel <span>Pickholtz</span></h1>
+  <p class="hero-subtitle">Studying fish behavior, invasive species, and coastal fisheries in the Mediterranean and Red Sea — and bringing the ocean into the classroom.</p>
+  <div class="hero-divider"></div>
+  <div class="hero-links">
+    <a href="https://drive.google.com/file/d/1K7d3S_cWq3KzmLrFKEoVKe8-8OBtfUgD/view?usp=sharing" class="btn btn-primary" target="_blank">Academic CV</a>
+    <a href="https://scholar.google.com/citations?user=MIJdAtAAAAAJ&hl=en" class="btn btn-outline" target="_blank">Google Scholar</a>
+    <a href="https://www.researchgate.net/profile/Renanel-Pickholtz" class="btn btn-outline" target="_blank">ResearchGate</a>
+  </div>
+  <span class="scroll-hint">↓ scroll</span>
+</section>
+
+<!-- RESEARCH INTERESTS -->
+<section id="research">
+  <div class="container">
+    <p class="section-label">What I study</p>
+    <h2 class="section-title">Research Interests</h2>
+    <div class="section-line"></div>
+    <div class="interests-grid">
+      <span class="interest-tag">🐟 Behavioral Ecology</span>
+      <span class="interest-tag">🦀 Invasive Species</span>
+      <span class="interest-tag">🌊 Conservation Biology</span>
+      <span class="interest-tag">🎣 Fisheries Management</span>
+      <span class="interest-tag">📡 Acoustic Telemetry</span>
+      <span class="interest-tag">👥 Citizen Science</span>
+      <span class="interest-tag">📚 Science Education</span>
+      <span class="interest-tag">🏘️ Community Activism</span>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <p class="section-label">Peer-reviewed work</p>
+    <h2 class="section-title">Selected Publications</h2>
+    <div class="section-line"></div>
+
+    <div class="pub-item">
+      <p class="pub-year">2023</p>
+      <p class="pub-title">Community Temperature Index reveals warming-driven tropicalization of Mediterranean fish assemblages</p>
+      <p class="pub-authors">Pickholtz, R., et al.</p>
+      <p class="pub-journal">Marine Ecology Progress Series</p>
+    </div>
+
+    <div class="pub-item">
+      <p class="pub-year">2021</p>
+      <p class="pub-title">Acoustic telemetry reveals residency and habitat use of an invasive fish in a semi-enclosed coastal lagoon</p>
+      <p class="pub-authors">Pickholtz, R., et al.</p>
+      <p class="pub-journal">Biological Invasions</p>
+    </div>
+
+    <div class="pub-item">
+      <p class="pub-year">2020</p>
+      <p class="pub-title">Citizen science as a tool for monitoring recreational fisheries catches along the Israeli Mediterranean coast</p>
+      <p class="pub-authors">Pickholtz, R., et al.</p>
+      <p class="pub-journal">Fisheries Research</p>
+    </div>
+
+    <a href="https://scholar.google.com/citations?user=MIJdAtAAAAAJ&hl=en" class="pub-more" target="_blank">View full publication list on Google Scholar →</a>
+    <br><small style="color:var(--gray);font-size:0.78rem;font-family:Arial,sans-serif;margin-top:0.5rem;display:block;">⚠️ Publication titles above are placeholder examples — please replace with your actual publications.</small>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <div class="container">
+    <p class="section-label">Education & outreach</p>
+    <h2 class="section-title">Teaching</h2>
+    <div class="section-line"></div>
+    <div class="teaching-grid">
+      <div class="teaching-card">
+        <div class="tc-icon">🧬</div>
+        <h3 class="tc-title">Marine Ecology Track</h3>
+        <p class="tc-desc">A 2–3 year innovative high school program integrating Mediterranean marine biodiversity and conservation as a substitute for the standard biology curriculum.</p>
+      </div>
+      <div class="teaching-card">
+        <div class="tc-icon">🐠</div>
+        <h3 class="tc-title">Field & Lab Work</h3>
+        <p class="tc-desc">Students conduct real site monitoring, fish morphology labs using fresh Jaffa port specimens, and contribute data to university research databases.</p>
+      </div>
+      <div class="teaching-card">
+        <div class="tc-icon">📊</div>
+        <h3 class="tc-title">Long-term Monitoring</h3>
+        <p class="tc-desc">Multi-year fishery catch sampling project at Jaffa port in partnership with Tel Aviv University's Belmaker Lab — students as genuine citizen scientists.</p>
+      </div>
+      <div class="teaching-card">
+        <div class="tc-icon">🏫</div>
+        <h3 class="tc-title">Biology & Chemistry</h3>
+        <p class="tc-desc">Teaching grades 6–11 with emphasis on experiential learning, ecological thinking, and connecting morphological features to real-world adaptations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFFILIATIONS -->
+<section id="affiliations">
+  <div class="container">
+    <p class="section-label">Academic networks</p>
+    <h2 class="section-title">Affiliations</h2>
+    <div class="section-line"></div>
+    <div class="aff-grid">
+      <a href="https://belmaker.weebly.com/" class="aff-card" target="_blank">
+        <span class="aff-icon">🔬</span>
+        <p class="aff-name">Belmaker Lab</p>
+        <p class="aff-sub">Tel Aviv University</p>
+      </a>
+      <a href="https://iui-eilat.huji.ac.il/Default.aspx" class="aff-card" target="_blank">
+        <span class="aff-icon">🌊</span>
+        <p class="aff-name">Inter-university Institute for Marine Sciences</p>
+        <p class="aff-sub">Eilat, Israel</p>
+      </a>
+      <a href="https://www.europeantrackingnetwork.org/en" class="aff-card" target="_blank">
+        <span class="aff-icon">📡</span>
+        <p class="aff-name">European Tracking Network</p>
+        <p class="aff-sub">Acoustic Telemetry Research</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Get in touch</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line" style="margin-left:auto;margin-right:auto;"></div>
+    <p style="color:var(--gray);font-family:Arial,sans-serif;font-size:0.95rem;line-height:1.8;">Interested in research collaboration, field work opportunities, or the marine ecology education program? I'd love to hear from you.</p>
+    <a href="mailto:renanelp@mail.tau.ac.il" class="contact-email">renanelp@mail.tau.ac.il</a>
+    <div class="contact-social">
+      <a href="https://scholar.google.com/citations?user=MIJdAtAAAAAJ&hl=en" class="btn btn-outline" target="_blank">Google Scholar</a>
+      <a href="https://www.researchgate.net/profile/Renanel-Pickholtz" class="btn btn-outline" target="_blank">ResearchGate</a>
+      <a href="https://drive.google.com/file/d/1K7d3S_cWq3KzmLrFKEoVKe8-8OBtfUgD/view?usp=sharing" class="btn btn-primary" target="_blank">Download CV</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Renanel Pickholtz · Marine Ecology · Tel Aviv University
+</footer>
+
+</body>
+</html>
